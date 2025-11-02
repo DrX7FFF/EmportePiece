@@ -18,6 +18,8 @@ USE_APPROX = True
 APPROX_EPSILON = 1.7
 USE_SMOOTH = True
 SMOOTH_BUFFER = 3.5
+
+
 FIT_ERROR = 2.5
 
 # --- STL / 3D ---

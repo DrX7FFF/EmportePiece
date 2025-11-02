@@ -7,6 +7,11 @@ python3 -m pip install pillow opencv-python shapely svgwrite
 # for svg_postprocess.py
 python3 -m pip install shapely trimesh numpy svgpathtools
 
+# for svg_to_stl.py
+python3 -m pip install mapbox-earcut
+# python3 -m pip install numpy shapely trimesh svgpathtools
+# python3 -m pip install pyglet
+
 
 ## Commandes utiles
 # source .venv/bin/activate
