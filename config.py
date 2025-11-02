@@ -10,6 +10,11 @@ SVG_OUT_DIR = DATA_DIR / "svg_out"
 DEBUG_DIR = DATA_DIR / "debug_out"
 SVG_SMOOTH_OUT = DATA_DIR / "svg_smooth_out"
 DEBUG_POST = DATA_DIR / "debug_postprocess"
+STL_OUT_DIR = DATA_DIR / "stl_out"
+DEBUG_DILATE_DIR = DATA_DIR / "debug_dilate"
+IMG_IN_DIR = IMAGES_DIR
+
+SCALE_PX_TO_MM = 0
 
 # ⚙️ Paramètres généraux
 THRESHOLD = 222
