@@ -8,7 +8,7 @@ Utilise fitCurves + config.py pour les chemins
 import os
 import numpy as np
 from svgpathtools import svg2paths, wsvg, Path, CubicBezier, Line
-from fitCurves.fitCurves import fit_curve
+from fitCurves import fitCurve
 from config import SVG_OUT_DIR, SVG_SMOOTH_OUT, DEBUG_POST, FIT_ERROR
 
 # 📁 Dossiers
@@ -26,7 +26,7 @@ def fit_path(points, error=FIT_ERROR):
     if len(points) < 4:
         return [Line(start=points[0], end=points[-1])]
     coords = np.array([[p.real, p.imag] for p in points])
-    curves = fit_curve(coords, error)
+    curves = fitCurve(coords, error)
     return [CubicBezier(*(complex(x, y) for x, y in c)) for c in curves]
 
 for svg_file in SVG_OUT_DIR.glob("*.svg"):

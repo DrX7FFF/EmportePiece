@@ -19,3 +19,9 @@ APPROX_EPSILON = 1.7
 USE_SMOOTH = True
 SMOOTH_BUFFER = 3.5
 FIT_ERROR = 2.5
+
+# --- STL / 3D ---
+OFFSETS_MM = [0, 1, 3, 5]   # original + 3 dilatations
+LAYER_THICKNESS_MM = 1.0    # 1 mm par couche
+SCALE_PX_TO_MM = 0.1        # conversion px->mm selon tes SVG
+JOIN_STYLE = 2              # 1=mitre (angles vifs), 2=round, 3=bevel
