@@ -64,7 +64,9 @@ for img_path in IMG_IN_DIR.glob("*.png"):
     # cv2.drawContours(binary, [largest], -1, (0, 0, 255), 1)    
     # cv2.imwrite(str(debug_path), mask)
 
-    kernel = np.ones((DELTA, DELTA), np.uint8)
+    # kernel = np.ones((DELTA, DELTA), np.uint8)
+    kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (DELTA, DELTA))
+
     mask = cv2.erode(mask, kernel)
     mask = cv2.dilate(mask, kernel)
 
@@ -74,8 +76,8 @@ for img_path in IMG_IN_DIR.glob("*.png"):
     if not contours:
         print(f"⚠️ Aucun contour trouvé pour {img_path}")
         continue
-    pts = contours[0].reshape(-1, 2)
-    # pts = largest.reshape(-1, 2)
+    largest = contours[0]
+    pts = largest.reshape(-1, 2)
     poly = Polygon(pts)
     # poly = poly.simplify(SIMPLIFY, preserve_topology=True)
     x, y = poly.exterior.xy
@@ -108,7 +110,7 @@ for img_path in IMG_IN_DIR.glob("*.png"):
     dwg.add(dwg.image(href=href, insert=(0, 0), size=(w, h)))
     dwg.add(dwg.polyline(pointlist, stroke="red", fill="none", stroke_width=1))
     # dwg.add(dwg.polyline(pointlist_smooth, stroke="green", fill="none", stroke_width=0.4))
-    # dwg.add(dwg.path(d=path_data, stroke="blue", fill="none", stroke_width=0.4))
+    dwg.add(dwg.path(d=path_data, stroke="blue", fill="none", stroke_width=0.4))
     dwg.save()
 
     dwg = svgwrite.Drawing(str(out_svg), profile="tiny")
