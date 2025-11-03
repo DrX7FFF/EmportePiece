@@ -157,5 +157,9 @@ def computeMaxError(points, bez, parameters):
 
 
 def normalize(v):
-    return v / linalg.norm(v)
+    from numpy import linalg
+    n = linalg.norm(v)
+    if n == 0 or isnan(n):
+        return v * 0  # évite division par zéro
+    return v / n
 
