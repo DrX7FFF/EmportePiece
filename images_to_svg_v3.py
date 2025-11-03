@@ -16,9 +16,10 @@ from shapely.geometry import Polygon
 import svgwrite
 from config import IMG_IN_DIR, SVG_OUT_DIR, DEBUG_DIR
 from fitCurves import fitCurve
+import base64
 
 TOL = 15
-TOL = 27
+TOL = 17
 SEED_POINT = (20,20)
 # DELTA = 5
 EPSILON = 1
@@ -98,11 +99,16 @@ for img_path in IMG_IN_DIR.glob("*.png"):
         path_data += f"C {c1[0]},{c1[1]} {c2[0]},{c2[1]} {p3[0]},{p3[1]} "
     path_data += "Z"  # fermer le chemin
 
+    with open(img_path, "rb") as f:
+        b64 = base64.b64encode(f.read()).decode()
+    href = f"data:image/png;base64,{b64}"
+
     dwg = svgwrite.Drawing(str(debug_svg), size=(w, h))
-    dwg.add(dwg.image(href=str(img_path), insert=(0, 0), size=(w, h)))
+    # dwg.add(dwg.image(href=str(img_path), insert=(0, 0), size=(w, h)))
+    dwg.add(dwg.image(href=href, insert=(0, 0), size=(w, h)))
     dwg.add(dwg.polyline(pointlist, stroke="red", fill="none", stroke_width=1))
-    dwg.add(dwg.polyline(pointlist_smooth, stroke="green", fill="none", stroke_width=0.4))
-    dwg.add(dwg.path(d=path_data, stroke="blue", fill="none", stroke_width=0.4))
+    # dwg.add(dwg.polyline(pointlist_smooth, stroke="green", fill="none", stroke_width=0.4))
+    # dwg.add(dwg.path(d=path_data, stroke="blue", fill="none", stroke_width=0.4))
     dwg.save()
 
     dwg = svgwrite.Drawing(str(out_svg), profile="tiny")
