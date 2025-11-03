@@ -19,9 +19,9 @@ from fitCurves import fitCurve
 import base64
 
 TOL = 15
-TOL = 17
 SEED_POINT = (20,20)
 DELTA = 5
+SIMPLIFY = 0.8
 EPSILON = 1
 MAX_ERROR = 3  # tolérance du fit Bézier
 
@@ -68,7 +68,7 @@ for img_path in IMG_IN_DIR.glob("*.png"):
     mask = cv2.erode(mask, kernel)
     mask = cv2.dilate(mask, kernel)
 
-    # cv2.imwrite(str(debug_path2), mask)
+    cv2.imwrite(str(debug_path2), mask)
 
     contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     if not contours:
@@ -77,11 +77,11 @@ for img_path in IMG_IN_DIR.glob("*.png"):
     pts = contours[0].reshape(-1, 2)
     # pts = largest.reshape(-1, 2)
     poly = Polygon(pts)
+    # poly = poly.simplify(SIMPLIFY, preserve_topology=True)
     x, y = poly.exterior.xy
     pointlist = list(zip(x, y))
 
-    # poly = poly.simplify(0.5, preserve_topology=True)
-    poly_smooth = poly.simplify(0.5, preserve_topology=True)
+    poly_smooth = poly.simplify(SIMPLIFY, preserve_topology=True)
     x, y = poly_smooth.exterior.xy
     pointlist_smooth = list(zip(x, y))
 
