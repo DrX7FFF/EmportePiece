@@ -39,9 +39,14 @@ for svg_file in SVG_OUT_DIR.glob("*.svg"):
         coords_mm.append(coords_mm[0])
     base = Polygon(coords_mm)  # maintenant en millimètres
  
-    if base.is_empty or not base.is_valid:
-        print("⚠️ Contour vide ou invalide.")
+    if base.is_empty:
+        print("⚠️ Contour vide.")
         continue
+
+    if not base.is_valid:
+        print("⚠️ Contour invalide.")
+        continue
+
 
     # Offsets
     b1 = base.buffer(OFF1)
