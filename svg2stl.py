@@ -10,7 +10,7 @@ from config import SVG_IN_DIR, DEBUG_DIR, STL_OUT_DIR
 
 # DPI = 96
 # PX_PER_MM = DPI / 25.4
-OFF1, OFF3, OFF5 = 1.0, 3.0, 5.0  # mm
+OFF1, OFF3, OFF5 = 1.0, 3.2, 5.6  # mm
 
 DEBUG_DIR.mkdir(parents=True, exist_ok=True)
 STL_OUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -80,13 +80,13 @@ for svg_file in SVG_IN_DIR.glob("*.svg"):
         return trimesh.util.concatenate(meshes) if meshes else None
 
     # Anneaux 2D non chevauchants
-    ring5 = b5.difference(b3)   # 5mm - 3mm
-    ring3 = b3.difference(b1)   # 3mm - 1mm
+    ring5 = b5.difference(base)   # 5mm - 3mm
+    ring3 = b3.difference(base)   # 3mm - 1mm
     ring1 = b1.difference(base) # 1mm - base (cavité)
 
-    m5 = extrude(ring5, 1.0, z=0.0)  # 0→1 mm
-    m3 = extrude(ring3, 3.0, z=0.0)  # 0→3 mm
-    m1 = extrude(ring1, 20.0, z=0.0) # 0→20 mm
+    m5 = extrude(ring5, 3.8, z=0.0)  # 0→3.8 mm
+    m3 = extrude(ring3, 6, z=0.0)  # 0→6 mm
+    m1 = extrude(ring1, 16.8, z=0) # 0→16.8 mm
 
     parts = [m for m in (m5, m3, m1) if m is not None]
     if not parts:
