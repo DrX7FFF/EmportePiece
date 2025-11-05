@@ -6,7 +6,7 @@ import svgwrite
 from svgpathtools import svg2paths
 from shapely.geometry import Polygon
 import trimesh
-from config import SVG_OUT_DIR, DEBUG_DIR, STL_OUT_DIR
+from config import SVG_IN_DIR, DEBUG_DIR, STL_OUT_DIR
 
 # DPI = 96
 # PX_PER_MM = DPI / 25.4
@@ -15,7 +15,7 @@ OFF1, OFF3, OFF5 = 1.0, 3.0, 5.0  # mm
 DEBUG_DIR.mkdir(parents=True, exist_ok=True)
 STL_OUT_DIR.mkdir(parents=True, exist_ok=True)
 
-for svg_file in SVG_OUT_DIR.glob("*.svg"):
+for svg_file in SVG_IN_DIR.glob("*.svg"):
     print(f"➡️ {svg_file.name}")
 
     paths, _ = svg2paths(str(svg_file))
