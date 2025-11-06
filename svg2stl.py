@@ -84,9 +84,9 @@ for svg_file in SVG_IN_DIR.glob("*.svg"):
     ring3 = b3.difference(base)   # 3mm - 1mm
     ring1 = b1.difference(base) # 1mm - base (cavité)
 
-    m5 = extrude(ring5, 3.8, z=0.0)  # 0→3.8 mm
-    m3 = extrude(ring3, 6, z=0.0)  # 0→6 mm
-    m1 = extrude(ring1, 16.8, z=0) # 0→16.8 mm
+    m5 = extrude(ring5, -3.8, z=0.0)  # 0→3.8 mm
+    m3 = extrude(ring3, -6, z=0.0)  # 0→6 mm
+    m1 = extrude(ring1, -16.8, z=0) # 0→16.8 mm
 
     parts = [m for m in (m5, m3, m1) if m is not None]
     if not parts:
