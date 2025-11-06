@@ -4,6 +4,9 @@ import trimesh
 from shapely.geometry import Polygon, MultiPolygon
 import numpy as np
 
+BORDER = 15
+TEXT = "F8"
+
 def extrude(geom, h, z=0.0):
     meshes = []
     geoms = [geom] if isinstance(geom, Polygon) else list(geom.geoms)
@@ -27,7 +30,7 @@ def extrude(geom, h, z=0.0):
 font = ImageFont.truetype("arial.ttf", 200)
 img = Image.new("L", (800, 200), 0)
 draw = ImageDraw.Draw(img)
-draw.text((1, 1), "HELLO", fill=255, font=font)
+draw.text((BORDER, BORDER), TEXT, fill=255, font=font)
 img.save("debug_text.png")
 
 arr = np.array(img)
@@ -43,12 +46,23 @@ for c in contours:
     x_max = max(x_max, x + w)
     y_max = max(y_max, y + h)
 
-rect = Polygon([(x_min-10,y_min-10), (x_max+10,y_min-10), (x_max+10,y_max+10), (x_min-10,y_max+10)])
+# parts = []
+rect = Polygon([(x_min-BORDER,y_min), (x_min,y_min-BORDER),
+                (x_max,y_min-BORDER), (x_max+BORDER,y_min),
+                (x_max+BORDER,y_max), (x_max,y_max+BORDER),
+                (x_min,y_max+BORDER), (x_min-BORDER,y_max)])
+# mesh1 = extrude(rect,3.0)
+# parts.append(mesh1)
+
 for c in contours:
     pts = c.reshape(-1, 2)
     poly = Polygon(pts)
     rect = rect.difference(poly)
 
-mesh = extrude(rect,3.0)
-# mesh = trimesh.creation.extrude_polygon(frame, height=3.0)
+mesh = extrude(rect,3.0, z=3.0)
+# mesh2 = extrude(rect,3.0, z=3.0)
+# parts.append(mesh2)
+
+# mesh = trimesh.util.concatenate(parts)
+# # mesh = trimesh.creation.extrude_polygon(frame, height=3.0)
 mesh.export("word_plate.stl")
