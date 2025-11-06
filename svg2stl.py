@@ -54,15 +54,15 @@ for svg_file in SVG_IN_DIR.glob("*.svg"):
     b5 = base.buffer(OFF5)
 
     # --- SVG debug (path noir + 3 dilatations rouge/orange/vert)
-    debug_svg = DEBUG_DIR / f"{svg_file.stem}_debug.svg"
-    dwg = svgwrite.Drawing(str(debug_svg))
-    for g, color in [(base, "black"), (b1, "red"), (b3, "orange"), (b5, "green")]:
-        geoms = [g] if isinstance(g, Polygon) else list(g.geoms)
-        for poly in geoms:
-            x, y = poly.exterior.xy
-            dwg.add(dwg.polyline(list(zip(x, y)), stroke=color, fill="none", stroke_width=0.4))
-    dwg.save()
-    print(f"🧩 SVG debug : {debug_svg}")
+    # debug_svg = DEBUG_DIR / f"{svg_file.stem}_debug.svg"
+    # dwg = svgwrite.Drawing(str(debug_svg))
+    # for g, color in [(base, "black"), (b1, "red"), (b3, "orange"), (b5, "green")]:
+    #     geoms = [g] if isinstance(g, Polygon) else list(g.geoms)
+    #     for poly in geoms:
+    #         x, y = poly.exterior.xy
+    #         dwg.add(dwg.polyline(list(zip(x, y)), stroke=color, fill="none", stroke_width=0.4))
+    # dwg.save()
+    # print(f"🧩 SVG debug : {debug_svg}")
 
     # --- Extrusions -> STL (un seul solide)
     def extrude(geom, h, z=0.0):
